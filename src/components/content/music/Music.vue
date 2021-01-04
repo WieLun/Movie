@@ -32,8 +32,8 @@ export default {
 
 <style scoped>
 .music {
-  width: 1100px;
-  height: 486px;
+  /* width: 1100px;
+  height: 486px; */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

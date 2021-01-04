@@ -1,6 +1,6 @@
 <template>
   <div class="discovery">
-    <swipper :banners="banners" />
+    <swipper :banners="banners" :radius-val="10"/>
     <music :songs-list="songsList"/>
   </div>
 

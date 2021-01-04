@@ -1,6 +1,10 @@
 <template>
   <el-carousel :interval="4000" type="card" height="200px">
-    <el-carousel-item v-for="(item, index) in banners" :key="index">
+    <el-carousel-item
+      :style="{ 'border-radius': radiusVal + 'px' }"
+      v-for="(item, index) in banners"
+      :key="index"
+    >
       <img :src="item.imageUrl" alt="" />
     </el-carousel-item>
   </el-carousel>
@@ -14,11 +18,20 @@ export default {
       type: Array,
       default: [],
     },
+    radiusVal: {
+      type: Number,
+      default: 0,
+    },
   },
 };
 </script>
 
 <style scoped>
+.el-carousel__item {
+  overflow: hidden;
+  /* border-radius: 10px; */
+}
+
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;
@@ -30,7 +43,6 @@ export default {
 .el-carousel__item img {
   width: 100%;
   height: 100%;
-  border-radius: 10px;
 }
 
 .el-carousel__item:nth-child(2n) {

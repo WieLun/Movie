@@ -1,10 +1,10 @@
 <template>
   <div class="music-item">
     <div class="desc-wrap">
-      <span>{{ musicItem.copywriter }}</span>
+      <!-- <span>{{ musicItem.copywriter }}</span> -->
     </div>
     <img class="music-img" :src="musicItem.picUrl" alt="" />
-    <p class="name">{{ musicItem.name }}</p>
+    <!-- <p class="name">{{ musicItem.name }}</p> -->
   </div>
 </template>
 
@@ -23,6 +23,10 @@ export default {
 </script>
 
 <style scoped>
+.music-item {
+  width: 200px;
+  height: 222px;
+}
 .music-img {
   width: 200px;
   height: 200px;
