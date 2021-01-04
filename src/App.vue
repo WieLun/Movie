@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import Index from "./components/content/index/Index";
+import Index from "components/content/index/Index";
 
 export default {
   name: "App",
