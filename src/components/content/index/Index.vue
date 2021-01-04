@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-container>
-  <el-aside width="200px">Aside</el-aside>
+  <el-aside width="200px">
+    <nav-menu/>
+  </el-aside>
   <el-container>
     <el-header>Header</el-header>
     <el-main>Main</el-main>
@@ -12,8 +14,12 @@
 </template>
 
 <script>
+import NavMenu from 'components/content/navmenu/NavMenu'
 export default {
   name: "Index",
+  components: {
+    NavMenu
+  }
 }
 </script>
 
