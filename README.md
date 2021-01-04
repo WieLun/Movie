@@ -1,4 +1,4 @@
-# music
+# Moive
 
 ## Project setup
 ```

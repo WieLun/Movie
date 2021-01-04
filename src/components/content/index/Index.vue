@@ -1,55 +1,54 @@
 <template>
-  <tab-bar>
-    <tab-bar-item path="/discovery">
-      <img slot="item-icon" src="~assets/img/tabbar/discovery.svg" alt="" />
-      <img
-        slot="item-icon-active"
-        src="~assets/img/tabbar/discovery_active.svg"
-        alt=""
-      />
-      <div slot="item-text">发现音乐</div>
-    </tab-bar-item>
-    <tab-bar-item>
-      <img slot="item-icon" src="~assets/img/tabbar/musiclist.svg" alt="" />
-      <img
-        slot="item-icon-active"
-        src="~assets/img/tabbar/musiclist_active.svg"
-        alt=""
-      />
-      <div slot="item-text">推荐歌单</div>
-    </tab-bar-item>
-    <tab-bar-item>
-      <img slot="item-icon" src="~assets/img/tabbar/songs.svg" alt="" />
-      <img
-        slot="item-icon-active"
-        src="~assets/img/tabbar/songs_active.svg"
-        alt=""
-      />
-      <div slot="item-text">最新音乐</div>
-    </tab-bar-item>
-    <tab-bar-item>
-      <img slot="item-icon" src="~assets/img/tabbar/mv.svg" alt="" />
-      <img
-        slot="item-icon-active"
-        src="~assets/img/tabbar/mv_active.svg"
-        alt=""
-      />
-      <div slot="item-text">最新MV</div>
-    </tab-bar-item>
-  </tab-bar>
+  <div>
+    <el-container>
+  <el-aside width="200px">Aside</el-aside>
+  <el-container>
+    <el-header>Header</el-header>
+    <el-main>Main</el-main>
+    <el-footer>Footer</el-footer>
+  </el-container>
+</el-container>
+  </div>
 </template>
 
 <script>
-import TabBar from "components/common/tabbar/TabBar";
-import TabBarItem from "components/common/tabbar/TabBarItem";
-
 export default {
   name: "Index",
-  components: {
-    TabBar,
-    TabBarItem,
-  },
-};
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+  .el-header, .el-footer {
+    background-color: #B3C0D1;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+  }
+  
+  .el-aside {
+    background-color: #D3DCE6;
+    color: #333;
+    text-align: center;
+    line-height: 200px;
+  }
+  
+  .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+    line-height: 160px;
+  }
+  
+  body > .el-container {
+    margin-bottom: 40px;
+  }
+  
+  .el-container:nth-child(5) .el-aside,
+  .el-container:nth-child(6) .el-aside {
+    line-height: 260px;
+  }
+  
+  .el-container:nth-child(7) .el-aside {
+    line-height: 320px;
+  }
+</style>

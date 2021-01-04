@@ -1,20 +1,15 @@
 <template>
   <div id="app">
-    <nav-bar/>
     <index />
-    <router-view></router-view>
   </div>
 </template>
-index
 <script>
-import Index from "components/content/index/Index";
-import NavBar from 'components/content/navbar/NavBar';
+import Index from "./components/content/index/Index";
 
 export default {
   name: "App",
   components: {
     Index,
-    NavBar,
   },
 };
 </script>
