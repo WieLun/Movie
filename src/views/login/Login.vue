@@ -10,21 +10,29 @@
     >
       <h3 class="title">系统登录</h3>
       <el-form-item prop="username">
-        <el-input v-model.number="loginForm.username"></el-input>
+        <el-input
+          placeholder="用户名"
+          autocomplete="on"
+          v-model.number="loginForm.username"
+        ></el-input>
       </el-form-item>
       <el-form-item prop="password">
         <el-input
           type="password"
           v-model="loginForm.password"
           autocomplete="off"
+          placeholder="密码"
         ></el-input>
       </el-form-item>
-      <el-checkbox style="width:100%;" v-model="checked" class="rememberme">记住密码</el-checkbox>
+      <el-checkbox style="width:100%;" v-model="checked" class="rememberme"
+        >记住密码</el-checkbox
+      >
       <el-form-item>
         <el-button
+          :loading="loading"
           style="width:100%;"
           type="primary"
-          @click="submitForm('loginForm')"
+          @click="submitForm()"
           >登陆</el-button
         >
       </el-form-item>
@@ -49,9 +57,23 @@ export default {
         ],
       },
       checked: true,
+      loading: false,
     };
   },
-  methods: {},
+  methods: {
+    submitForm() {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.loading = true;
+          sessionStorage.setItem("user", this.loginForm.username);
+          this.$router.push({ path: "/" });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+  },
 };
 </script>
 
@@ -77,6 +99,5 @@ export default {
 label.el-checkbox.rememberme {
   margin: 0px 0px 15px;
   text-align: center;
-} 
-
+}
 </style>
