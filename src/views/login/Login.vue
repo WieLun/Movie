@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { login } from "network/login";
+
 export default {
   data() {
     return {
@@ -64,9 +66,17 @@ export default {
     submitForm() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.loading = true;
-          sessionStorage.setItem("user", this.loginForm.username);
-          this.$router.push({ path: "/" });
+          login(this.loginForm, this.checked).then((res) => {
+            if (res.status === -1) {
+              this.$router.push({ path: "/login" });
+              // this.$router.push({ path: this.redirect || '/login' })
+            } else {
+              if (this.loading === true) {
+                sessionStorage.setItem("user", this.loginForm.username);
+              }
+              this.$router.push({ path: "/" });
+            }
+          });
         } else {
           console.log("error submit!!");
           return false;
