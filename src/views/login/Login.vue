@@ -43,6 +43,8 @@
 <script>
 import { login } from "network/login";
 
+import { base64Encode } from "utils/base64";
+
 export default {
   data() {
     return {
@@ -58,7 +60,7 @@ export default {
           { required: true, message: "please enter password", trigger: "blur" },
         ],
       },
-      checked: true,
+      checked: false,
       loading: false,
     };
   },
@@ -66,15 +68,20 @@ export default {
     submitForm() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          login(this.loginForm, this.checked).then((res) => {
-            if (res.status === -1) {
-              this.$router.push({ path: "/login" });
-              // this.$router.push({ path: this.redirect || '/login' })
+          this.loading = true;
+          let userInfo = {
+            username: this.loginForm.username,
+            password: base64Encode(this.loginForm.password),
+          };
+
+          login(userInfo).then((res) => {
+            if (res.status === 0) {
+              sessionStorage.setItem('user', this.loginForm.username);
+              this.$router.push('/admin');
+              this.loading = false;
             } else {
-              if (this.loading === true) {
-                sessionStorage.setItem("user", this.loginForm.username);
-              }
-              this.$router.push({ path: "/" });
+              console.log(res.data);
+              this.loading = false
             }
           });
         } else {
@@ -108,6 +115,6 @@ export default {
 }
 label.el-checkbox.rememberme {
   margin: 0px 0px 15px;
-  text-align: center;
+  /* text-align: center; */
 }
 </style>

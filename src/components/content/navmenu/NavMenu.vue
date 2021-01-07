@@ -1,5 +1,4 @@
 <template>
-
   <div id="home">
     <el-container>
       <el-aside width="auto">
@@ -41,4 +40,4 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped></style

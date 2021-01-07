@@ -16,7 +16,7 @@
 <script>
 import NavMenu from 'components/content/navmenu/NavMenu'
 export default {
-  name: "Index",
+  name: "Container",
   components: {
     NavMenu
   }

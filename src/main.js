@@ -1,10 +1,10 @@
 import Vue from "vue";
 import App from "./App.vue";
 import { router } from "./router";
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
 
-import './icons'
+import "./icons";
 
 Vue.config.productionTip = false;
 
@@ -14,3 +14,18 @@ new Vue({
   render: (h) => h(App),
   router,
 }).$mount("#app");
+
+router.beforeEach((to, from, next) => {
+  if (to.path === "/admin/login") {
+    sessionStorage.removeItem("user");
+  } 
+  var user = sessionStorage.getItem('user');
+  if (!user && to.path !== "/admin/login") {
+    next({
+      path: '/admin/login'
+    })
+  }
+  else {
+    next();
+  }
+});
