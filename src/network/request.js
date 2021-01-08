@@ -4,7 +4,6 @@ import axios from "axios";
 const request = axios.create({
   baseURL: process.env.VUE_APP_URL,
   timeout: 5000,
-
 });
 
 // 2.请求拦截的作用
@@ -27,4 +26,4 @@ request.interceptors.response.use(
   }
 );
 
-export default request
+export default request;

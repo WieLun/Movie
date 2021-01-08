@@ -5,6 +5,6 @@ export function login(userInfo) {
   return request({
     url: '/api/v2/admin/login',
     method: 'post',
-    data: JSON.stringify({userInfo})
+    data: userInfo
   });
 }
