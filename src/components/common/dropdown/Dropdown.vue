@@ -20,7 +20,7 @@ export default {
 
 <style scoped>
 .right-menu {
-  padding-right: 30px;
+  padding-right: 20px;
 }
 
 .title {
