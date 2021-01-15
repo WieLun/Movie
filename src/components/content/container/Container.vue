@@ -61,7 +61,6 @@ export default {
   },
   data() {
     return {
-      isCollapse: false,
     };
   },
   methods: {
@@ -75,14 +74,17 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
-    toggleClick() {
-      this.isCollapse = !this.isCollapse;
-    },
+    // toggleClick() {
+    //   this.isCollapse = !this.isCollapse;
+    // },
   },
   computed: {
     routes() {
       return this.$router.options.routes;
     },
+    isCollapse() {
+      return this.$store.state.isCollapse
+    }
   },
 };
 </script>

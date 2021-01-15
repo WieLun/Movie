@@ -29,7 +29,8 @@ export default {
   },
   methods: {
     toggleClick() {
-      this.$emit('toggleClick')
+      // this.$emit('toggleClick')
+      this.$store.commit('toggle')
     }
   }
 }
