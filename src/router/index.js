@@ -1,54 +1,243 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-const Login = () => import("views/login/Login");
-const Dashboard = () => import("views/dashboard/Dashboard");
-const Test = () => import("views/test/Test");
-const Test1 = () => import("views/test1/Test1");
 const Container = () => import("components/content/container/Container");
+const Login = () => import("views/admin/login/Login");
+const Home = () => import("views/admin/home/Home");
+const TagAdd = () => import("views/admin/tag/TagAdd");
+const TagList = () => import("views/admin/tag/TagList");
+const MovieAdd = () => import("views/admin/movie/MovieAdd");
+const MovieList = () => import("views/admin/movie/MovieList");
+const PreviewAdd = () => import("views/admin/preview/PreviewAdd");
+const PreviewList = () => import("views/admin/preview/PreviewList");
+const UserList = () => import("views/admin/user/UserList");
+const CommentList = () => import("views/admin/comment/CommentList");
+const CollectList = () => import("views/admin/collect/CollectList");
+const OperateList = () => import("views/admin/log/Operate");
+const AdminLoginList = () => import("views/admin/log/AdminLogin");
+const UserLoginList = () => import("views/admin/log/UserLogin");
+const AuthAdd = () => import("views/admin/auth/AuthAdd");
+const AuthList = () => import("views/admin/auth/AuthList");
+const RoleAdd = () => import("views/admin/role/RoleAdd");
+const RoleList = () => import("views/admin/role/RoleList");
+const AdminAdd = () => import("views/admin/admin/AdminAdd");
+const AdminList = () => import("views/admin/admin/AdminList");
+
+
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/admin',
-    redirect: '/admin/dashboard',
-    name: 'Container',
+    redirect: '/admin',
+    name: 'Home',
     component: Container,
-    meta: { title: 'Dashboard', icon: 'dashboard' },
+    meta: { title: '首页', icon: 'home' },
     children: [
       {
-        path: 'dashboard', 
-        name: '首页1', 
-        component: Test1, 
-        meta: { title: 'Test1', icon: 'example' },
-      },
-      {
-        path: 'dashboard1', 
-        name: '首页2', 
-        component: Test, 
-        meta: { title: 'Test2', icon: 'example' },
+        path: '', 
+        name: 'home', 
+        component: Home, 
+        meta: { title: '控制面板', icon: 'item' },
       },
     ]
   },
   {
-    path: '/admin/test',
-    // redirect: '/admin/dashboard',
-    name: 'Container',
+    path: '/admin/tag',
+    redirect: '/admin/tag/add',
+    name: 'Tag',
     component: Container,
-    meta: { title: 'Test', icon: 'example' },
+    meta: { title: '标签管理', icon: 'tag' },
     children: [
       {
-        path: 'dashboard', 
-        name: '首页1', 
-        component: Test1, 
-        meta: { title: 'Test1', icon: 'example' },
+        path: 'add', 
+        name: 'TagAdd', 
+        component: TagAdd, 
+        meta: { title: '添加标签', icon: 'item' },
       },
       {
-        path: 'dashboard1', 
-        name: '首页2', 
-        component: Test, 
-        meta: { title: 'Test2', icon: 'example' },
+        path: 'list', 
+        name: 'TagList', 
+        component: TagList, 
+        meta: { title: '标签列表', icon: 'item' },
+      },
+    ]
+  },
+  {
+    path: '/admin/moive',
+    redirect: '/admin/movie/add',
+    name: 'Movie',
+    component: Container,
+    meta: { title: '电影管理', icon: 'movie' },
+    children: [
+      {
+        path: 'add', 
+        name: 'MovieAdd', 
+        component: MovieAdd, 
+        meta: { title: '添加电影', icon: 'item' },
+      },
+      {
+        path: 'list', 
+        name: 'MovieList', 
+        component: MovieList, 
+        meta: { title: '电影列表', icon: 'item' },
+      },
+    ]
+  },
+  {
+    path: '/admin/preview',
+    redirect: '/admin/preview/add',
+    name: 'Preview',
+    component: Container,
+    meta: { title: '预告管理', icon: 'preview' },
+    children: [
+      {
+        path: 'add', 
+        name: 'PreviewAdd', 
+        component: PreviewAdd, 
+        meta: { title: '添加预告', icon: 'item' },
+      },
+      {
+        path: 'list', 
+        name: 'PreviewList', 
+        component: PreviewList, 
+        meta: { title: '预告列表', icon: 'item' },
+      },
+    ]
+  },
+  {
+    path: '/admin/user',
+    redirect: '/admin/user/list',
+    name: 'User',
+    component: Container,
+    meta: { title: '会员管理', icon: 'users' },
+    children: [
+      {
+        path: 'list', 
+        name: 'UserList', 
+        component: UserList, 
+        meta: { title: '会员列表', icon: 'item' },
+      },
+    ]
+  },
+  {
+    path: '/admin/comment',
+    redirect: '/admin/comment/list',
+    name: 'Comment',
+    component: Container,
+    meta: { title: '评论管理', icon: 'comment' },
+    children: [
+      {
+        path: 'list', 
+        name: 'CommentList', 
+        component: CommentList, 
+        meta: { title: '评论列表', icon: 'item' },
+      },
+    ]
+  },
+  {
+    path: '/admin/collect',
+    redirect: '/admin/collect/list',
+    name: 'Collect',
+    component: Container,
+    meta: { title: '收藏管理', icon: 'collect' },
+    children: [
+      {
+        path: 'list', 
+        name: 'CollectList', 
+        component: CollectList, 
+        meta: { title: '收藏列表', icon: 'item' },
+      },
+    ]
+  },
+  {
+    path: '/admin/log',
+    redirect: '/admin/log/oplist',
+    name: 'Log',
+    component: Container,
+    meta: { title: '日志管理', icon: 'log' },
+    children: [
+      {
+        path: 'oplist', 
+        name: 'OperateList', 
+        component: OperateList, 
+        meta: { title: '操作日志列表', icon: 'item' },
+      },
+      {
+        path: 'adminlogin', 
+        name: 'AdminLoginList', 
+        component: AdminLoginList, 
+        meta: { title: '管理员登陆日志列表', icon: 'item' },
+      },
+      {
+        path: 'userlogin', 
+        name: 'UserLoginList', 
+        component: UserLoginList, 
+        meta: { title: '会员登陆日志列表', icon: 'item' },
+      },
+    ]
+  },
+  {
+    path: '/admin/auth',
+    redirect: '/admin/auth/add',
+    name: 'Auth',
+    component: Container,
+    meta: { title: '权限管理', icon: 'auth' },
+    children: [
+      {
+        path: 'add', 
+        name: 'AuthAdd', 
+        component: AuthAdd, 
+        meta: { title: '添加权限', icon: 'item' },
+      },
+      {
+        path: 'list', 
+        name: 'AuthList', 
+        component: AuthList, 
+        meta: { title: '权限列表', icon: 'item' },
+      },
+    ]
+  },
+  {
+    path: '/admin/role',
+    redirect: '/admin/role/add',
+    name: 'Role',
+    component: Container,
+    meta: { title: '角色管理', icon: 'role' },
+    children: [
+      {
+        path: 'add', 
+        name: 'RoleAdd', 
+        component: RoleAdd, 
+        meta: { title: '添加角色', icon: 'item' },
+      },
+      {
+        path: 'list', 
+        name: 'RoleList', 
+        component: RoleList, 
+        meta: { title: '角色列表', icon: 'item' },
+      },
+    ]
+  },
+  {
+    path: '/admin/admin',
+    redirect: '/admin/admin/add',
+    name: 'Admin',
+    component: Container,
+    meta: { title: '管理员管理', icon: 'admin' },
+    children: [
+      {
+        path: 'add', 
+        name: 'AdminAdd', 
+        component: AdminAdd, 
+        meta: { title: '添加角色', icon: 'item' },
+      },
+      {
+        path: 'list', 
+        name: 'AdminList', 
+        component: AdminList, 
+        meta: { title: '管理员列表', icon: 'item' },
       },
     ]
   },
@@ -58,14 +247,6 @@ const routes = [
   //   component: Login,
   //   hidden: true
   // },
-  // {
-  //   path: '/discovery',
-  //   component: Discovery
-  // },
-  // {
-  //   path: '/menu',
-  //   component: Menu
-  // }
 ];
 
 export const router = new VueRouter({

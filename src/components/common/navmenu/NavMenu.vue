@@ -53,7 +53,7 @@ export default {
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
-      console.log(this.$router.options.routes[0].children[0].path);
+      console.log(this.$router.options);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
