@@ -1,7 +1,9 @@
 <template>
   <div class="navbar">
-    <hamburger class="hamburger"/>
-    <breadcrumb class="breadcrumb" />
+    <div class="left-menu">
+      <hamburger />
+      <breadcrumb />
+    </div>
     <div class="right-menu">
       <el-dropdown>
         <span class="el-dropdown-link">
@@ -17,7 +19,7 @@
 </template>
 
 <script>
-import Hamburger from "./hamburger/Hamburger"
+import Hamburger from "./hamburger/Hamburger";
 import Breadcrumb from "./breadcrumb/Breadcrumb";
 
 export default {
@@ -32,10 +34,14 @@ export default {
 <style scoped>
 .navbar {
   height: 50px;
-  overflow: hidden;
   display: flex;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  justify-content: space-between;
+  align-items: center;
 }
 
+.left-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>

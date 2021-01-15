@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 0 15px" @click="toggleClick">
     <svg
-      :class="{'is-active':isActive}"
+      :class="{ 'is-active': isActive }"
       class="hamburger"
       viewBox="0 0 1024 1024"
       version="1.1"
@@ -20,20 +20,19 @@
 
 <script>
 export default {
-  name: 'Hamburger',
-  props: {
-    isActive: {
-      type: Boolean,
-      default: false
-    }
+  name: "Hamburger",
+  data() {
+    return {
+      isActive: false,
+    };
   },
   methods: {
     toggleClick() {
-      // this.$emit('toggleClick')
-      this.$store.commit('toggle')
-    }
-  }
-}
+      this.$store.commit("toggle");
+      this.isActive = !this.isActive;
+    },
+  },
+};
 </script>
 
 <style scoped>
