@@ -13,6 +13,7 @@
         active-text-color="#409EFF"
         :collapse="isCollapse"
         :collapse-transition="false"
+        router
       >
         <el-submenu
           :index="index + ''"
@@ -24,7 +25,7 @@
             <span>{{ item.meta.title }}</span>
           </template>
           <el-menu-item
-            :index="index + ''"
+            :index="'/admin/' + subItem.path"
             v-for="(subItem, index) in item.children"
             :key="index"
           >
@@ -38,9 +39,8 @@
     </el-aside>
 
     <el-container>
-      <el-header> 
-        <span v-if="isCollapse" class="toggle-button" @click="toggleClick">&lt;&lt;</span>
-        <span v-else class="toggle-button" @click="toggleClick">&gt;&gt;</span>
+      <el-header height="50px">
+        <nav-bar/>
       </el-header>
 
       <el-main>
@@ -53,8 +53,12 @@
 
 <script>
 import NavMenu from "components/common/navmenu/NavMenu";
+import NavBar from "components/common/navbar/NavBar";
 export default {
   name: "Container",
+  components: {
+    NavBar
+  },
   data() {
     return {
       isCollapse: false,
@@ -63,7 +67,7 @@ export default {
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
-      console.log(this.$router.options.routes[0].children);
+      console.log(this.$router.options.routes[0].children[0].path);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
@@ -72,8 +76,8 @@ export default {
       console.log(key, keyPath);
     },
     toggleClick() {
-      this.isCollapse = !this.isCollapse
-    }
+      this.isCollapse = !this.isCollapse;
+    },
   },
   computed: {
     routes() {
@@ -88,7 +92,8 @@ export default {
   height: 100%;
 }
 .el-header {
-  background-color: #373d41;
+  background-color: #FFFFFF;
+  padding: 0 0;
 }
 .el-footer {
   background-color: #b3c0d1;
@@ -99,6 +104,10 @@ export default {
 }
 .el-menu {
   border-right: none;
+}
+
+.svg-icon {
+  margin-right: 10px;
 }
 
 .el-main {

@@ -1,6 +1,7 @@
 <template>
   <div class="navbar">
-    <breadcrumb class="breadcrumb-container" />
+    <hamburger class="hamburger"/>
+    <breadcrumb class="breadcrumb" />
     <div class="right-menu">
       <el-dropdown>
         <span class="el-dropdown-link">
@@ -16,34 +17,25 @@
 </template>
 
 <script>
-import Breadcrumb from "components/common/breadcrumb/Breadcrumb";
+import Hamburger from "./hamburger/Hamburger"
+import Breadcrumb from "./breadcrumb/Breadcrumb";
 
 export default {
   name: "NavBar",
   components: {
+    Hamburger,
     Breadcrumb,
   },
 };
 </script>
 
 <style scoped>
-/* .el-dropdown-link {
-  cursor: pointer;
-  color: #409eff;
-}
-.el-icon-arrow-down {
-  font-size: 12px;
-} */
-
 .navbar {
   height: 50px;
   overflow: hidden;
-  position: relative;
+  display: flex;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 }
 
-  .breadcrumb-container {
-    float: left;
-  }
 </style>
