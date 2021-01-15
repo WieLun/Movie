@@ -1,53 +1,77 @@
-<!-- 左侧菜单导航栏组件 -->
 <template>
-  <div class="app-nav-wrap">
-    <el-menu :default-active="$route.path" class="el-menu-vertical-demo" router>
+  <el-menu
+    default-active="2"
+    class="el-menu-vertical-demo"
+    :unique-opened="true"
+    @open="handleOpen"
+    @close="handleClose"
+    background-color="#304156"
+    text-color="#fff"
+    active-text-color="#409EFF"
+    :collapse="isCollapse"
+    :collapse-transition="false"
+    router
+  >
+    <el-submenu
+      :index="index + ''"
+      v-for="(item, index) in routes"
+      :key="index"
+    >
+      <template slot="title">
+        <svg-icon :icon-class="item.meta.icon" />
+        <span>{{ item.meta.title }}</span>
+      </template>
       <el-menu-item
-        v-for="menu in routes"
-        :index="menu.path"
-        :key="menu.path">
-        <i class="el-icon-menu"></i>{{menu.name}}
-      </el-menu-item>
-    </el-menu>
-  </div>
+        :index="item.path + '/' + subItem.path"
+        v-for="(subItem, index) in item.children"
+        :key="index"
+      >
+        <template slot="title">
+          <svg-icon :icon-class="subItem.meta.icon" />
+          <span>{{ subItem.meta.title }}</span>
+        </template></el-menu-item
+      >
+    </el-submenu>
+  </el-menu>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        menus: [
-          { route: '/', name: '首页' },
-          { route: '/user', name: '用户管理' },
-          { route: '/psd', name: '密码管理' },
-          { route: '/salary', name: '工资管理' },
-          { route: '/attendence', name: '考勤管理' },
-          { route: '/perform', name: '绩效管理' },
-          { route: '/admin', name: '系统管理' },
-          { route: '/feedback', name: '意见反馈' }
-        ]
-      }
+export default {
+  name: "NavMenu",
+  props: {
+    isCollapse: {
+      type: Boolean,
+      default: false,
     },
-    mounted () {
-      console.log(this.$router.options.routes)
-      // 刷新时以当前路由做为tab加入tabs
-      if (this.$route.path !== '/' && this.$route.path.indexOf('userInfo') === -1) {
-        this.$store.commit('add_tabs', { route: '/', name: '首页' })
-        this.$store.commit('add_tabs', { route: this.$route.path, name: this.$route.name })
-        this.$store.commit('set_active_index', this.$route.path)
-      } else {
-        this.$store.commit('add_tabs', { route: '/', name: '首页' })
-        this.$store.commit('set_active_index', '/')
-        this.$router.push('/')
-      }
-    },
-    computed: {
-      options () {
-        return this.$store.state.options
+    routes: {
+      type: Array,
+      default() {
+        return [];
       },
-      routes () {
-        return this.$router.options.routes.filter(i => !i.hidden)
-      }
-    }
-  }
+    },
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+      console.log(this.$router.options.routes[0].children[0].path);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+  },
+};
 </script>
+
+<style scoped>
+.el-menu {
+  border-right: none;
+}
+
+.svg-icon {
+  margin-right: 10px;
+}
+
+</style>

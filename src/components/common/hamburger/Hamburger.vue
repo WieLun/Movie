@@ -28,7 +28,8 @@ export default {
   },
   methods: {
     toggleClick() {
-      this.$store.commit("toggle");
+      this.$emit('toggleClick');
+      // this.$store.commit("toggle");
       this.isActive = !this.isActive;
     },
   },

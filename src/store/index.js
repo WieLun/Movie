@@ -7,12 +7,8 @@ Vue.use(Vuex);
 // 2、创建对象
 const store = new Vuex.Store({
   state: {
-    isCollapse: false,
   },
   mutations: {
-    toggle(state) {
-      state.isCollapse = !state.isCollapse;
-    },
   },
   getters: {},
   modules: {},

@@ -12,7 +12,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/admin',
-    // redirect: '/admin/dashboard',
+    redirect: '/admin/dashboard',
     name: 'Container',
     component: Container,
     meta: { title: 'Dashboard', icon: 'dashboard' },
