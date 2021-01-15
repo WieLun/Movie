@@ -40,12 +40,11 @@
 
     <el-container>
       <el-header height="50px">
-        <nav-bar/>
+        <nav-bar />
       </el-header>
 
       <el-main>
-        <!-- <router-view /> -->
-        main
+        <router-view />
       </el-main>
     </el-container>
   </el-container>
@@ -57,11 +56,10 @@ import NavBar from "components/common/navbar/NavBar";
 export default {
   name: "Container",
   components: {
-    NavBar
+    NavBar,
   },
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -83,8 +81,8 @@ export default {
       return this.$router.options.routes;
     },
     isCollapse() {
-      return this.$store.state.isCollapse
-    }
+      return this.$store.state.isCollapse;
+    },
   },
 };
 </script>
@@ -94,7 +92,7 @@ export default {
   height: 100%;
 }
 .el-header {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 0 0;
 }
 .el-footer {
