@@ -25,7 +25,7 @@
             <span>{{ item.meta.title }}</span>
           </template>
           <el-menu-item
-            :index="'/admin/' + subItem.path"
+            :index="item.path+'/'+ subItem.path"
             v-for="(subItem, index) in item.children"
             :key="index"
           >

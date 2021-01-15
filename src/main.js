@@ -16,16 +16,16 @@ new Vue({
   store,
 }).$mount("#app");
 
-router.beforeEach((to, from, next) => {
-  if (to.path === "/admin/login") {
-    sessionStorage.removeItem("user");
-  }
-  var user = sessionStorage.getItem("user");
-  if (!user && to.path !== "/admin/login") {
-    next({
-      path: "/admin/login",
-    });
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.path === "/admin/login") {
+//     sessionStorage.removeItem("user");
+//   }
+//   var user = sessionStorage.getItem("user");
+//   if (!user && to.path !== "/admin/login") {
+//     next({
+//       path: "/admin/login",
+//     });
+//   } else {
+//     next();
+//   }
+// });
