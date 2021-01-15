@@ -12,6 +12,16 @@
 <script>
 export default {
   name: "BreadCrumb",
+  methods: {
+    getBreadcrumb() {
+      let matched = this.$route.matched.filter(item => item.meta && item.meta.title);
+      console.log(matched);
+      console.log(this.$route);
+    },
+  },
+  created() {
+    this.getBreadcrumb();
+  },
 };
 </script>
 
