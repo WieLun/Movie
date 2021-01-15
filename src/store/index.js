@@ -1,26 +1,22 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
 // 1、安装插件
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 // 2、创建对象
 const store = new Vuex.Store({
   state: {
-    isCollapse: false
+    isCollapse: false,
   },
   mutations: {
     toggle(state) {
-      state.isCollapse =! state.isCollapse
-    }
+      state.isCollapse = !state.isCollapse;
+    },
   },
-  getters: {
-    
-  },
-  modules: {
-    
-  }
-})
+  getters: {},
+  modules: {},
+});
 
 // 3、导出
-export default store
+export default store;
