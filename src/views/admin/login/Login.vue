@@ -76,12 +76,16 @@ export default {
 
           login(userInfo).then((res) => {
             if (res.status === 0) {
-              sessionStorage.setItem('user', this.loginForm.username);
-              this.$router.push('/admin');
+              sessionStorage.setItem("user", this.loginForm.username);
+              this.$message({
+                message: "登陆成功",
+                type: "success",
+              });
+              this.$router.push("/admin");
               this.loading = false;
             } else {
               console.log(res.data);
-              this.loading = false
+              this.loading = false;
             }
           });
         } else {

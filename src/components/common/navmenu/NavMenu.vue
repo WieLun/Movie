@@ -12,31 +12,17 @@
     :collapse-transition="false"
     router
   >
-    <el-submenu
+    <side-item
+      v-for="(route, index) in routes"
+      :key="route.path"
+      :item="route"
       :index="index + ''"
-      v-for="(item, index) in routes"
-      :key="index"
-    >
-      <template slot="title">
-        <svg-icon :icon-class="item.meta.icon" />
-        <span>{{ item.meta.title }}</span>
-      </template>
-      <el-menu-item
-        :index="item.path + '/' + subItem.path"
-        v-for="(subItem, index) in item.children"
-        :key="index"
-        @click="saveNavState(item.path + '/' + subItem.path)"
-      >
-        <template slot="title">
-          <svg-icon :icon-class="subItem.meta.icon" />
-          <span>{{ subItem.meta.title }}</span>
-        </template></el-menu-item
-      >
-    </el-submenu>
+    />
   </el-menu>
 </template>
 
 <script>
+import sideItem from "./sideItem/sideItem.vue";
 export default {
   name: "NavMenu",
   props: {
@@ -44,25 +30,16 @@ export default {
       type: Boolean,
       default: false,
     },
-    routes: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
+  },
+  components: {
+    sideItem,
   },
   data() {
     return {
       activePath: " ",
     };
   },
-  created() {
-    this.activePath = sessionStorage.getItem("activePath");
-  },
   methods: {
-    saveNavState(activePath) {
-      sessionStorage.setItem("activePath", activePath);
-    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
       console.log(this.$router.options);
@@ -74,15 +51,17 @@ export default {
       console.log(key, keyPath);
     },
   },
+  computed: {
+    routes() {
+      console.log(this.$router.options.routes[0].hidden);
+      return this.$router.options.routes;
+    },
+  },
 };
 </script>
 
 <style scoped>
 .el-menu {
   border-right: none;
-}
-
-.svg-icon {
-  margin-right: 10px;
 }
 </style>

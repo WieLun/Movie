@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-aside :width="isCollapse ? '64px' : '200px'">
-      <nav-menu :isCollapse="isCollapse" :routes="routes" />
+      <nav-menu :isCollapse="isCollapse" />
     </el-aside>
 
     <el-container>
@@ -46,11 +46,6 @@ export default {
   methods: {
     toggleClick() {
       this.isCollapse = !this.isCollapse;
-    },
-  },
-  computed: {
-    routes() {
-      return this.$router.options.routes;
     },
   },
 };

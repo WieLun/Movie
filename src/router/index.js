@@ -29,17 +29,20 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/admin/login",
+    name: "Login",
+    component: Login,
+    hidden: true
+  },
+  {
     path: '/admin',
-    redirect: '/admin',
-    name: 'Home',
     component: Container,
-    meta: { title: '首页', icon: 'home' },
     children: [
       {
         path: '', 
         name: 'home', 
         component: Home, 
-        meta: { title: '控制面板', icon: 'item' },
+        meta: { title: '首页', icon: 'home' },
       },
     ]
   },
@@ -108,46 +111,37 @@ const routes = [
   },
   {
     path: '/admin/user',
-    redirect: '/admin/user/list',
-    name: 'User',
     component: Container,
-    meta: { title: '会员管理', icon: 'users' },
     children: [
       {
         path: 'list', 
         name: 'UserList', 
         component: UserList, 
-        meta: { title: '会员列表', icon: 'item' },
+        meta: { title: '会员管理', icon: 'users' },
       },
     ]
   },
   {
     path: '/admin/comment',
-    redirect: '/admin/comment/list',
-    name: 'Comment',
     component: Container,
-    meta: { title: '评论管理', icon: 'comment' },
     children: [
       {
         path: 'list', 
         name: 'CommentList', 
         component: CommentList, 
-        meta: { title: '评论列表', icon: 'item' },
+        meta: { title: '评论管理', icon: 'comment' },
       },
     ]
   },
   {
     path: '/admin/collect',
-    redirect: '/admin/collect/list',
-    name: 'Collect',
     component: Container,
-    meta: { title: '收藏管理', icon: 'collect' },
     children: [
       {
         path: 'list', 
         name: 'CollectList', 
         component: CollectList, 
-        meta: { title: '收藏列表', icon: 'item' },
+        meta: { title: '收藏管理', icon: 'collect' },
       },
     ]
   },
@@ -241,12 +235,6 @@ const routes = [
       },
     ]
   },
-  // {
-  //   path: "/admin/login",
-  //   name: "Login",
-  //   component: Login,
-  //   hidden: true
-  // },
 ];
 
 export const router = new VueRouter({
