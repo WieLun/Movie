@@ -22,7 +22,8 @@
 </template>
 
 <script>
-import sideItem from "./sideItem/sideItem.vue";
+import SideItem from "./sideItem/SideItem";
+
 export default {
   name: "NavMenu",
   props: {
@@ -32,7 +33,7 @@ export default {
     },
   },
   components: {
-    sideItem,
+    SideItem,
   },
   data() {
     return {
@@ -53,7 +54,6 @@ export default {
   },
   computed: {
     routes() {
-      console.log(this.$router.options.routes[0].hidden);
       return this.$router.options.routes;
     },
   },

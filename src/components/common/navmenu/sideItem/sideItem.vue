@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: "sideItem",
+  name: "SideItem",
   props: {
     item: {
       type: Object,
