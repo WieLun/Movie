@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => {
   if (to.path === "/admin/login") {
     sessionStorage.removeItem("user");
   }
-  var user = sessionStorage.getItem("user");
+  const user = sessionStorage.getItem("user");
   if (!user && to.path !== "/admin/login") {
     next({
       path: "/admin/login",
