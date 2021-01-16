@@ -52,11 +52,16 @@ export default {
     },
   },
   data() {
-    activePath: ''
+    return {
+      activePath: " ",
+    };
+  },
+  created() {
+    this.activePath = sessionStorage.getItem("activePath");
   },
   methods: {
     saveNavState(activePath) {
-      sessionStorage.setItem('activePath',activePath);
+      sessionStorage.setItem("activePath", activePath);
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -80,5 +85,4 @@ export default {
 .svg-icon {
   margin-right: 10px;
 }
-
 </style>
