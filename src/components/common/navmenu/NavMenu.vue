@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    default-active="2"
+    :default-active="activePath"
     class="el-menu-vertical-demo"
     :unique-opened="true"
     @open="handleOpen"
@@ -25,6 +25,7 @@
         :index="item.path + '/' + subItem.path"
         v-for="(subItem, index) in item.children"
         :key="index"
+        @click="saveNavState(item.path + '/' + subItem.path)"
       >
         <template slot="title">
           <svg-icon :icon-class="subItem.meta.icon" />
@@ -50,7 +51,13 @@ export default {
       },
     },
   },
+  data() {
+    activePath: ''
+  },
   methods: {
+    saveNavState(activePath) {
+      sessionStorage.setItem('activePath',activePath);
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
       console.log(this.$router.options);
