@@ -1,7 +1,11 @@
 <template>
   <div v-if="!item.hidden">
     <template v-if="item.children.length === 1">
-      <el-menu-item :index="item.path + '/' + subItem.path" v-for="(subItem, index) in item.children" :key="index">
+      <el-menu-item
+        :index="item.path + '/' + subItem.path"
+        v-for="(subItem, index) in item.children"
+        :key="index"
+      >
         <svg-icon :icon-class="subItem.meta.icon" />
         <span slot="title">{{ subItem.meta.title }}</span>
       </el-menu-item>
