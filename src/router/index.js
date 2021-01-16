@@ -68,7 +68,7 @@ const routes = [
     ]
   },
   {
-    path: '/admin/moive',
+    path: '/admin/movie',
     redirect: '/admin/movie/add',
     name: 'Movie',
     component: Container,

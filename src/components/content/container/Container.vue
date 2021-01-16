@@ -7,8 +7,9 @@
     <el-container>
       <el-header height="50px">
         <nav-bar>
-          <div slot="left">
+          <div slot="left" class="navbar-left">
             <hamburger @toggleClick="toggleClick" />
+            <breadcrumb />
           </div>
           <div slot="right">
             <dropdown @logoutClick="logoutClick" />
@@ -28,6 +29,7 @@ import NavBar from "components/common/navbar/NavBar";
 import NavMenu from "components/common/navmenu/NavMenu";
 
 import Hamburger from "components/common/hamburger/Hamburger";
+import Breadcrumb from "components/common/breadcrumb/Breadcrumb";
 import Dropdown from "components/common/dropdown/Dropdown";
 export default {
   name: "Container",
@@ -35,6 +37,7 @@ export default {
     NavBar,
     NavMenu,
     Hamburger,
+    Breadcrumb,
     Dropdown,
   },
   data() {
@@ -49,7 +52,7 @@ export default {
     logoutClick() {
       sessionStorage.removeItem("user");
       this.$router.push("/admin/login");
-    }
+    },
   },
 };
 </script>
@@ -74,5 +77,9 @@ export default {
 .toggle-button {
   /* background-color: #4A5064; */
   text-align: center;
+}
+.navbar-left {
+  display: flex;
+  align-items: center;
 }
 </style>

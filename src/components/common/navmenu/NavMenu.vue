@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      activePath: " ",
+      activePath: "",
     };
   },
   methods: {
@@ -51,6 +51,9 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
+  },
+  created() {
+    this.activePath = sessionStorage.getItem("activePath");
   },
   computed: {
     routes() {

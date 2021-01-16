@@ -5,6 +5,7 @@
         :index="item.path + '/' + subItem.path"
         v-for="(subItem, index) in item.children"
         :key="index"
+        @click="saveNavState(item.path + '/' + subItem.path)"
       >
         <svg-icon :icon-class="subItem.meta.icon" />
         <span slot="title">{{ subItem.meta.title }}</span>
@@ -45,9 +46,7 @@ export default {
       default: "",
     },
   },
-  created() {
-    this.activePath = sessionStorage.getItem("activePath");
-  },
+
   methods: {
     saveNavState(activePath) {
       sessionStorage.setItem("activePath", activePath);
