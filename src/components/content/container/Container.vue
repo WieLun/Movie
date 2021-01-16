@@ -11,7 +11,7 @@
             <hamburger @toggleClick="toggleClick" />
           </div>
           <div slot="right">
-            <dropdown />
+            <dropdown @logoutClick="logoutClick" />
           </div>
         </nav-bar>
       </el-header>
@@ -29,7 +29,6 @@ import NavMenu from "components/common/navmenu/NavMenu";
 
 import Hamburger from "components/common/hamburger/Hamburger";
 import Dropdown from "components/common/dropdown/Dropdown";
-
 export default {
   name: "Container",
   components: {
@@ -47,6 +46,10 @@ export default {
     toggleClick() {
       this.isCollapse = !this.isCollapse;
     },
+    logoutClick() {
+      sessionStorage.removeItem("user");
+      this.$router.push("/admin/login");
+    }
   },
 };
 </script>
@@ -62,11 +65,9 @@ export default {
 .el-footer {
   background-color: #b3c0d1;
 }
-
 .el-aside {
   background-color: #304156;
 }
-
 .el-main {
   background-color: #e9eef3;
 }
