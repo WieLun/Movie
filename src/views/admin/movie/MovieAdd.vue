@@ -8,10 +8,11 @@
       <el-form
         label-position="top"
         ref="movieForm"
+        :rules="rules"
         :model="movieForm"
         label-width="80px"
       >
-        <el-form-item label="片名">
+        <el-form-item label="片名" prop="movieTitle">
           <el-input v-model="movieForm.movieTitle"></el-input>
         </el-form-item>
         <el-form-item label="文件">
@@ -20,7 +21,7 @@
             ref="upload"
             action
             :file-list="fileList"
-            :on-preview="handlePreview"
+            :before-upload="beforeMovieUpload"
             auto-upload
             :http-request="httpRequest"
           >
@@ -53,9 +54,7 @@
             action
             :show-file-list="false"
             :auto-upload="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-            :on-change="onChange"
+            :on-change="handleChange"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -83,15 +82,19 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="地区">
+        <el-form-item label="地区" prop="area">
           <el-input v-model="movieForm.area"></el-input>
         </el-form-item>
-        <el-form-item label="片长">
-          <el-input v-model="movieForm.length"></el-input>
+        <el-form-item label="片长(min)" prop="length">
+          <el-input v-model.number="movieForm.length"></el-input>
         </el-form-item>
-        <el-form-item label="上映时间">
-          <el-input> </el-input>
-          <el-calendar v-model="releseTime" />
+        <el-form-item label="上映时间" prop="releaseTime">
+          <el-date-picker
+            v-model="movieForm.releaseTime"
+            type="date"
+            placeholder="选择日期"
+          >
+          </el-date-picker>
         </el-form-item>
         <el-form-item>
           <el-button size="small" type="primary" @click="submitUpload"
@@ -104,7 +107,12 @@
 </template>
 
 <script>
-import { uploadMovieInfo, getTagInfo } from "network/movie";
+import {
+  uploadMovieInfo,
+  getTagInfo,
+  uploadMovieFile,
+  uploadMovieImg,
+} from "network/movie";
 
 export default {
   name: "MovieAdd",
@@ -118,7 +126,7 @@ export default {
         tagVal: "",
         length: "",
         releaseTime: "",
-        value: "",
+        movieUrl: "",
       },
       stars: [
         {
@@ -143,15 +151,27 @@ export default {
         },
       ],
       tags: [],
-      isShow: false,
       movieType: "video/mp4",
       imageUrl: "",
       fileList: [],
-      releseTime: new Date(),
+      isMovie: false,
+      submitForm: new FormData(),
       rules: {
         movieTitle: [
           { required: true, message: "请输入片名", trigger: "blur" },
         ],
+        area: [{ required: true, message: "请输入地区", trigger: "blur" }],
+        length: [
+          { required: true, message: "请输入片长", trigger: "blur" },
+          { type: "number", message: "片长必须为数字" },
+        ],
+
+        releaseTime: {
+          type: "date",
+          required: true,
+          message: "请选择日期",
+          trigger: "change",
+        },
       },
     };
   },
@@ -173,12 +193,12 @@ export default {
       let fileObj = param.file; // 相当于input里取得的file
       let data = new FormData();
       data.append("movieFile", fileObj);
-      data.append("isMovie", true);
-      uploadMovieInfo(data).then((res) => {
+      uploadMovieFile(data).then((res) => {
         if (res.status === 0) {
           const movieSrc = res.data.movieSrc;
+          this.movieForm.movieUrl = res.data.movieUrl;
           this.$refs.video.src = movieSrc;
-
+          this.isMovie = true;
           this.movieType = "video/" + movieSrc.split(".").slice(-1)[0];
         } else {
           this.$message({
@@ -191,44 +211,70 @@ export default {
     submitUpload() {
       this.$refs.movieForm.validate((valid) => {
         if (valid) {
-          console.log(this.$refs.movieForm);
-          console.log("有效");
-          this.$refs.upload.submit();
+          let data = this.submitForm;
+          let form = this.movieForm;
+          let resImg = data.has("imgFile");
+          if (!isMovie) {
+            $this.message.error("请上传电影视频");
+            return false;
+          }
+          if (!resImg) {
+            $this.message.error("请上传封面");
+            return false;
+          }
+          for (let key in form) {
+            data.append(key, form[key]);
+            uploadMovieInfo(data).then((res) => {
+              console.log(res);
+            });
+          }
         } else {
-          console.log("error submit!!");
+          this.isMovie = false;
           return false;
         }
       });
     },
-    handlePreview(file) {
-      console.log(file);
+    beforeMovieUpload(file) {
+      const isType = file.type === "video/mp4" || file.type === "video/flv";
+      const isSize = file.size / 1024 / 1024 < 1024;
+      if (!isType) {
+        this.$message.error("上传视频只能是mp4与flv格式");
+      }
+      if (!isSize) {
+        this.$message.error("上传视频图片大小不能超过1G");
+      }
+      return isType && isSize;
     },
 
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
+      const type = file.name.split(".").slice(-1)[0];
+      const isType = type === "jpeg" || type === "jpg" || type === "png";
       const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+      if (!isType) {
+        this.$message.error("上传头像图片只能是JPG与PNG格式");
       }
       if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
+        this.$message.error("上传头像图片大小不能超过2MB");
       }
-      return isJPG && isLt2M;
+      return isType && isLt2M;
     },
-    onChange(file, fileList) {
-      const _this = this;
-      const event = event || window.event;
-      file = event.target.files[0];
-      const reader = new FileReader();
-      //转base64
-      reader.onload = function(e) {
-        _this.imageUrl = e.target.result; //将图片路径赋值给src
-      };
-      reader.readAsDataURL(file);
+    handleChange(file, fileList) {
+      const res = this.beforeAvatarUpload(file);
+      if (res) {
+        this.submitForm = new FormData();
+        this.submitForm.append("imgFile", file.raw);
+        const _this = this;
+        const event = event || window.event;
+        file = event.target.files[0];
+        const reader = new FileReader();
+        //转base64
+        reader.onload = function(e) {
+          _this.imageUrl = e.target.result; //将图片路径赋值给src
+        };
+        reader.readAsDataURL(file);
+      } else {
+        return res;
+      }
     },
   },
 };

@@ -17,3 +17,14 @@ export function getTagInfo() {
     method: "get",
   });
 }
+
+export function uploadMovieFile(data) {
+  return request({
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    url: "/api/v2/admin/movie/moviefile",
+    method: "post",
+    data: data,
+  });
+}
