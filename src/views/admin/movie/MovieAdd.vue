@@ -214,7 +214,7 @@ export default {
           let data = this.submitForm;
           let form = this.movieForm;
           let resImg = data.has("imgFile");
-          if (!isMovie) {
+          if (!this.isMovie) {
             $this.message.error("请上传电影视频");
             return false;
           }
