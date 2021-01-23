@@ -4,8 +4,17 @@
       <div slot="header" class="clearfix">
         <div>电影列表</div>
         <div>
-          <el-input placeholder="请输入内容" v-model="searchVal" clearable @clear="getMovieInfo">
-            <el-button slot="append" icon="el-icon-search"  @click="getMovieInfo"></el-button>
+          <el-input
+            placeholder="请输入内容"
+            v-model="searchVal"
+            clearable
+            @clear="getMovieInfo"
+          >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="getMovieInfo"
+            ></el-button>
           </el-input>
         </div>
       </div>
@@ -48,12 +57,28 @@
       >
       </el-pagination>
     </el-card>
+    <el-dialog
+      title="修改电影"
+      ref="movieDialog"
+      :visible.sync="dialogMovieVisible"
+      width="70%"
+      top= "5vh"
+      class="movie-dialog"
+      @opened="handleOpend"
+    >
+      <movie-child/>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogMovieVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogMovieClick">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { formatDate } from "utils/index";
 import { movieInfo, movieDel } from "network/movie";
+import MovieChild from "./childComps/MovieChild";
 
 export default {
   name: "MovieList",
@@ -64,7 +89,11 @@ export default {
       pageSize: 5,
       currentPage: 1,
       total: 0,
+      dialogMovieVisible: false,
     };
+  },
+  components: {
+    MovieChild,
   },
   methods: {
     getMovieInfo() {
@@ -106,8 +135,8 @@ export default {
       });
     },
     handleEdit(index, row) {
-      // console.log(index, row);
-      // this.dialogTagVisible = true;
+      console.log(index, row);
+      this.dialogMovieVisible = true;
       // this.tagName = row.name;
       // sessionStorage.setItem("tagName", this.tagName);
     },
@@ -138,6 +167,11 @@ export default {
       this.currentPage = val;
       this.getMovieInfo();
     },
+    handleOpend(){
+      this.$refs.movieDialog.$el.scollTop = 0;
+    },
+    dialogMovieClick() {},
+
   },
   created() {
     this.getMovieInfo();
@@ -154,5 +188,13 @@ export default {
 
 .el-pagination {
   margin-top: 10px;
+}
+
+.movie-dialog {
+  margin-top: 10px;
+  height: 90%;
+  
+  /* display: flex; */
+  /* overflow: hidden; */
 }
 </style>

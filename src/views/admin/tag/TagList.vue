@@ -85,7 +85,6 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
       this.dialogTagVisible = true;
       this.tagName = row.name;
       sessionStorage.setItem("tagName", this.tagName);
