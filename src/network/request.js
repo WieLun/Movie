@@ -3,7 +3,7 @@ import axios from "axios";
 // 1.创建axios的实例
 const request = axios.create({
   baseURL: process.env.VUE_APP_URL,
-  timeout: 5000,
+  timeout: 10000,
 });
 
 // 2.请求拦截的作用

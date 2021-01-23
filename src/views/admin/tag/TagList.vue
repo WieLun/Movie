@@ -10,7 +10,7 @@
         <el-table-column label="添加时间" prop="addTime"> </el-table-column>
         <el-table-column align="right">
           <template slot="header" slot-scope="scope">
-            <el-input placeholder="请输入内容" v-model="searchVal" clearable @clear="getTagInfo()">
+            <el-input placeholder="请输入内容" v-model="searchVal" clearable @clear="getTagInfo">
               <el-button
                 slot="append"
                 icon="el-icon-search"

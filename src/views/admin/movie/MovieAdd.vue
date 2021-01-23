@@ -11,6 +11,7 @@
         :rules="rules"
         :model="movieForm"
         label-width="80px"
+        v-loading="loading"
       >
         <el-form-item label="片名" prop="movieTitle">
           <el-input v-model="movieForm.movieTitle"></el-input>
@@ -85,12 +86,14 @@
         <el-form-item label="地区" prop="area">
           <el-input v-model="movieForm.area"></el-input>
         </el-form-item>
-        <el-form-item label="片长(min)" prop="length">
-          <el-input v-model.number="movieForm.length"></el-input>
+        <el-form-item label="片长(min)" prop="movieLength">
+          <el-input v-model.number="movieForm.movieLength"></el-input>
         </el-form-item>
         <el-form-item label="上映时间" prop="releaseTime">
           <el-date-picker
             v-model="movieForm.releaseTime"
+            value-format="timestamp"
+            format="yyyy-MM-dd"
             type="date"
             placeholder="选择日期"
           >
@@ -124,7 +127,7 @@ export default {
         starValue: "1",
         area: "",
         tagVal: "",
-        length: "",
+        movieLength: "",
         releaseTime: "",
         movieUrl: "",
       },
@@ -150,6 +153,7 @@ export default {
           label: "五星",
         },
       ],
+      loading: false,
       tags: [],
       movieType: "video/mp4",
       imageUrl: "",
@@ -161,7 +165,7 @@ export default {
           { required: true, message: "请输入片名", trigger: "blur" },
         ],
         area: [{ required: true, message: "请输入地区", trigger: "blur" }],
-        length: [
+        movieLength: [
           { required: true, message: "请输入片长", trigger: "blur" },
           { type: "number", message: "片长必须为数字" },
         ],
@@ -215,21 +219,52 @@ export default {
           let form = this.movieForm;
           let resImg = data.has("imgFile");
           if (!this.isMovie) {
-            $this.message.error("请上传电影视频");
+            this.$message.error("请上传电影视频");
             return false;
           }
           if (!resImg) {
-            $this.message.error("请上传封面");
+            this.$message.error("请上传封面");
             return false;
           }
+          data.delete("movieTitle");
+          data.delete("descript");
+          data.delete("starValue");
+          data.delete("area");
+          data.delete("tagVal");
+          data.delete("movieLength");
+          data.delete("releaseTime");
+          data.delete("movieUrl");
           for (let key in form) {
-            data.append(key, form[key]);
-            uploadMovieInfo(data).then((res) => {
-              console.log(res);
-            });
+            if (key === "releaseTime") {
+              data.append(key, form[key] / 1000);
+            } else {
+              data.append(key, form[key]);
+            }
           }
+          this.loading = true;
+          uploadMovieInfo(data).then((res) => {
+            if (res.status === 0) {
+              this.$message.success("上传成功");
+              this.loading = false;
+              this.isMovie = false;
+              this.movieForm.movieTitle = "";
+              this.movieForm.descript = "";
+              this.movieForm.area = "";
+              this.movieForm.movieLength = "";
+              this.movieForm.releaseTime = "";
+              this.movieForm.movieUrl = "";
+              this.fileList = [];
+              this.submitForm = new FormData();
+              this.imageUrl = "";
+              this.$refs.video.src = "";
+            } else {
+              this.loading = false;
+              this.$message.error(res.data);
+            }
+          });
         } else {
           this.isMovie = false;
+          this.loading = false;
           return false;
         }
       });

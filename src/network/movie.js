@@ -28,3 +28,25 @@ export function uploadMovieFile(data) {
     data: data,
   });
 }
+
+export function movieInfo(currentPage, pageSize, searchVal) {
+  return request({
+    url: "/api/v2/admin/movie/list",
+    method: "get",
+    params: {
+      currentPage,
+      pageSize,
+      searchVal
+    }
+  });
+}
+
+export function movieDel(id) {
+  return request({
+    url: "/api/v2/admin/movie/del",
+    method: "get",
+    params: {
+      id
+    }
+  });
+}
