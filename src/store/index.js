@@ -7,8 +7,15 @@ Vue.use(Vuex);
 // 2、创建对象
 const store = new Vuex.Store({
   state: {
+    dialogMovieVisible: false
   },
   mutations: {
+    setMovieVisibleTrue(state) {
+      state.dialogMovieVisible = true;
+    },
+    setMovieVisibleFalse(state) {
+      state.dialogMovieVisible = false;
+    }
   },
   getters: {},
   modules: {},
