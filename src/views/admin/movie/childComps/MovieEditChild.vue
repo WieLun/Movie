@@ -1,112 +1,104 @@
 <template>
-  <div>
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>添加电影</span>
-      </div>
-
-      <el-form
-        label-position="top"
-        ref="movieForm"
-        :rules="rules"
-        :model="movieForm"
-        label-width="80px"
-        v-loading="loading"
+  <el-form
+    label-position="top"
+    ref="movieForm"
+    :rules="rules"
+    :model="movieForm"
+    label-width="80px"
+    v-loading="loading"
+  >
+    <el-form-item label="片名" prop="movieTitle">
+      <el-input v-model="movieForm.movieTitle"></el-input>
+    </el-form-item>
+    <el-form-item label="文件">
+      <el-upload
+        class="upload-demo"
+        ref="upload"
+        action
+        :file-list="fileList"
+        :before-upload="beforeMovieUpload"
+        auto-upload
+        :http-request="httpRequest"
       >
-        <el-form-item label="片名" prop="movieTitle">
-          <el-input v-model="movieForm.movieTitle"></el-input>
-        </el-form-item>
-        <el-form-item label="文件">
-          <el-upload
-            class="upload-demo"
-            ref="upload"
-            action
-            :file-list="fileList"
-            :before-upload="beforeMovieUpload"
-            auto-upload
-            :http-request="httpRequest"
-          >
-            <el-button slot="trigger" size="small" type="primary"
-              >选取文件</el-button
-            >
+        <el-button slot="trigger" size="small" type="primary"
+          >选取文件</el-button
+        >
 
-            <div slot="tip" class="el-upload__tip">
-              <video controls="controls" ref="video">
-                <source src="" :type="movieType" />
-              </video>
-              <div>
-                只能上传flv/mp4文件，且不超过1G
-              </div>
-            </div>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="简介">
-          <el-input
-            type="textarea"
-            :rows="2"
-            placeholder="请输入内容"
-            v-model="movieForm.descript"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item label="封面">
-          <el-upload
-            class="avatar-uploader"
-            action
-            :show-file-list="false"
-            :auto-upload="false"
-            :on-change="handleChange"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="星级">
-          <el-select v-model="movieForm.starValue" placeholder="请选择">
-            <el-option
-              v-for="item in stars"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="标签">
-          <el-select v-model="movieForm.tagVal" placeholder="请选择">
-            <el-option
-              v-for="item in tags"
-              :key="item.tagId"
-              :label="item.tagName"
-              :value="item.tagId"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="地区" prop="area">
-          <el-input v-model="movieForm.area"></el-input>
-        </el-form-item>
-        <el-form-item label="片长(min)" prop="movieLength">
-          <el-input v-model.number="movieForm.movieLength"></el-input>
-        </el-form-item>
-        <el-form-item label="上映时间" prop="releaseTime">
-          <el-date-picker
-            v-model="movieForm.releaseTime"
-            value-format="timestamp"
-            format="yyyy-MM-dd"
-            type="date"
-            placeholder="选择日期"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item>
-          <el-button size="small" type="primary" @click="submitUpload"
-            >确定</el-button
-          >
-        </el-form-item>
-      </el-form>
-    </el-card>
-  </div>
+        <div slot="tip" class="el-upload__tip">
+          <video controls="controls" ref="video">
+            <source src="" :type="movieType" />
+          </video>
+          <div>
+            只能上传flv/mp4文件，且不超过1G
+          </div>
+        </div>
+      </el-upload>
+    </el-form-item>
+    <el-form-item label="简介">
+      <el-input
+        type="textarea"
+        :rows="2"
+        placeholder="请输入内容"
+        v-model="movieForm.descript"
+      >
+      </el-input>
+    </el-form-item>
+    <el-form-item label="封面">
+      <el-upload
+        class="avatar-uploader"
+        action
+        :show-file-list="false"
+        :auto-upload="false"
+        :on-change="handleChange"
+      >
+        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
+    </el-form-item>
+    <el-form-item label="星级">
+      <el-select v-model="movieForm.starValue" placeholder="请选择">
+        <el-option
+          v-for="item in stars"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="标签">
+      <el-select v-model="movieForm.tagVal" placeholder="请选择">
+        <el-option
+          v-for="item in tags"
+          :key="item.tagId"
+          :label="item.tagName"
+          :value="item.tagId"
+        >
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="地区" prop="area">
+      <el-input v-model="movieForm.area"></el-input>
+    </el-form-item>
+    <el-form-item label="片长(min)" prop="movieLength">
+      <el-input v-model.number="movieForm.movieLength"></el-input>
+    </el-form-item>
+    <el-form-item label="上映时间" prop="releaseTime">
+      <el-date-picker
+        v-model="movieForm.releaseTime"
+        value-format="timestamp"
+        format="yyyy-MM-dd"
+        type="date"
+        placeholder="选择日期"
+      >
+      </el-date-picker>
+    </el-form-item>
+    <el-form-item>
+      <el-button size="small" type="primary" @click="submitUpload"
+        >确定</el-button
+      >
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
@@ -118,7 +110,7 @@ import {
 } from "network/movie";
 
 export default {
-  name: "MovieAdd",
+  name: "MovieEditChild",
   data() {
     return {
       movieForm: {

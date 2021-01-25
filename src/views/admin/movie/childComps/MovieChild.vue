@@ -110,7 +110,7 @@ import {
 } from "network/movie";
 
 export default {
-  name: "MovieAdd",
+  name: "MovieChild",
   data() {
     return {
       movieForm: {

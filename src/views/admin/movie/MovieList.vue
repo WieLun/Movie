@@ -57,7 +57,9 @@
       >
       </el-pagination>
     </el-card>
-    <movie-dialog />
+    <movie-dialog>
+      <movie-edit-child />
+    </movie-dialog>
   </div>
 </template>
 
@@ -66,6 +68,7 @@ import { formatDate } from "utils/index";
 import { movieInfo, movieDel } from "network/movie";
 
 import MovieDialog from "./childComps/MovieDialog";
+import MovieEditChild from "./childComps/MovieEditChild";
 
 export default {
   name: "MovieList",
@@ -80,6 +83,7 @@ export default {
   },
   components: {
     MovieDialog,
+    MovieEditChild,
   },
   methods: {
     getMovieInfo() {
