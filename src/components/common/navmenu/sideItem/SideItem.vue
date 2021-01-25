@@ -55,8 +55,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .svg-icon {
   margin-right: 10px;
+}
+.el-menu--collapse .el-submenu__title span{
+  display: none;
+}
+/*隐藏 > */
+.el-menu--collapse .el-submenu__title .el-icon-arrow-right{
+  display: none;
 }
 </style>
