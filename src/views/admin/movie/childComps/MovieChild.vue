@@ -106,7 +106,6 @@ import {
   uploadMovieInfo,
   getTagInfo,
   uploadMovieFile,
-  uploadMovieImg,
 } from "network/movie";
 
 export default {

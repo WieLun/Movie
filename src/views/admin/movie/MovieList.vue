@@ -58,7 +58,7 @@
       </el-pagination>
     </el-card>
     <movie-dialog>
-      <movie-edit-child />
+      <movie-edit-child :preForm="preForm" />
     </movie-dialog>
   </div>
 </template>
@@ -79,6 +79,7 @@ export default {
       pageSize: 5,
       currentPage: 1,
       total: 0,
+      preForm: Object,
     };
   },
   components: {
@@ -93,7 +94,7 @@ export default {
           this.total = res.data.total;
           const movieInfo = res.data.movieInfo;
           const tagInfo = res.data.tagInfo;
-
+          console.log('object',movieInfo);
           for (let i = 0; i < movieInfo.length; i++) {
             // const number = i;
             const id = movieInfo[i]["id"];
@@ -107,10 +108,12 @@ export default {
             const commentNum = movieInfo[i]["commentNum"];
             const date = new Date(movieInfo[i]["releaseTime"] * 1000);
             const releaseTime = formatDate(date, "yyyy-MM-dd");
+            const imgUrl = movieInfo[i]["imgUrl"];
+            const movieUrl = movieInfo[i]["movieUrl"];
+            const descript = movieInfo[i]["descript"];
 
             this.tableData.push({
               id,
-              // number,
               movieTitle,
               movieLength,
               tagName,
@@ -119,6 +122,9 @@ export default {
               playNum,
               commentNum,
               releaseTime,
+              imgUrl,
+              movieUrl,
+              descript
             });
           }
         }
@@ -126,6 +132,7 @@ export default {
     },
     handleEdit(index, row) {
       console.log(index, row);
+      this.preForm = row;
       this.$store.commit("setMovieVisibleTrue");
     },
     handleDelete(index, row) {

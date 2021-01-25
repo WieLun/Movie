@@ -106,11 +106,16 @@ import {
   uploadMovieInfo,
   getTagInfo,
   uploadMovieFile,
-  uploadMovieImg,
 } from "network/movie";
 
 export default {
   name: "MovieEditChild",
+  props: {
+    preForm: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       movieForm: {
@@ -172,6 +177,14 @@ export default {
     };
   },
   created() {
+    console.log(this.preForm,'---');
+    this.movieForm.movieTitle = this.preForm.movieTitle;
+    // this.movieForm.movieTitle = this.preForm.movieTitle;
+    // this.movieForm.movieTitle = this.preForm.movieTitle;
+    // this.movieForm.movieTitle = this.preForm.movieTitle;
+    // this.movieForm.movieTitle = this.preForm.movieTitle;
+    // this.movieForm.movieTitle = this.preForm.movieTitle;
+
     getTagInfo().then((res) => {
       if (res.status === 0) {
         this.tags = res.data;
@@ -183,6 +196,10 @@ export default {
         });
       }
     });
+  },
+  beforeDestroyed() {
+    this.preForm = Object;
+    this.movieForm = new FormData();
   },
   methods: {
     httpRequest(param) {
