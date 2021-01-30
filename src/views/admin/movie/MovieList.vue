@@ -58,7 +58,7 @@
       </el-pagination>
     </el-card>
     <movie-dialog>
-      <movie-edit-child :preForm="preForm" />
+      <movie-edit-child :preForm="preForm" :key="preForm.id"/>
     </movie-dialog>
   </div>
 </template>
@@ -116,6 +116,7 @@ export default {
               id,
               movieTitle,
               movieLength,
+              tagId,
               tagName,
               area,
               star,

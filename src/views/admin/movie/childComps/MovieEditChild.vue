@@ -25,7 +25,7 @@
         >
 
         <div slot="tip" class="el-upload__tip">
-          <video controls="controls" ref="video">
+          <video controls="controls" ref="videoEdit">
             <source src="" :type="movieType" />
           </video>
           <div>
@@ -102,11 +102,7 @@
 </template>
 
 <script>
-import {
-  uploadMovieInfo,
-  getTagInfo,
-  uploadMovieFile,
-} from "network/movie";
+import { uploadMovieInfo, getTagInfo, uploadMovieFile } from "network/movie";
 
 export default {
   name: "MovieEditChild",
@@ -119,34 +115,35 @@ export default {
   data() {
     return {
       movieForm: {
+        id: 1,
         movieTitle: "",
         descript: "",
         starValue: "1",
         area: "",
-        tagVal: "",
+        tagVal: 1,
         movieLength: "",
         releaseTime: "",
         movieUrl: "",
       },
       stars: [
         {
-          value: "1",
+          value: 1,
           label: "一星",
         },
         {
-          value: "2",
+          value: 2,
           label: "二星",
         },
         {
-          value: "3",
+          value: 3,
           label: "三星",
         },
         {
-          value: "4",
+          value: 4,
           label: "四星",
         },
         {
-          value: "5",
+          value: 5,
           label: "五星",
         },
       ],
@@ -177,18 +174,10 @@ export default {
     };
   },
   created() {
-    console.log(this.preForm,'---');
-    this.movieForm.movieTitle = this.preForm.movieTitle;
-    // this.movieForm.movieTitle = this.preForm.movieTitle;
-    // this.movieForm.movieTitle = this.preForm.movieTitle;
-    // this.movieForm.movieTitle = this.preForm.movieTitle;
-    // this.movieForm.movieTitle = this.preForm.movieTitle;
-    // this.movieForm.movieTitle = this.preForm.movieTitle;
-
     getTagInfo().then((res) => {
       if (res.status === 0) {
         this.tags = res.data;
-        this.movieForm.tagVal = res.data[0].tagId;
+        // this.movieForm.tagVal = res.data[0].tagId;
       } else {
         this.$message({
           message: res.data,
@@ -196,10 +185,23 @@ export default {
         });
       }
     });
+
+    console.log(this.preForm, "---");
+    console.log(this.preForm.tagId);
+    this.movieForm.movieTitle = this.preForm.movieTitle;
+    this.movieForm.descript = this.preForm.descript;
+    this.movieForm.starValue = this.preForm.star;
+    this.movieForm.movieTitle = this.preForm.movieTitle;
+    this.movieForm.area = this.preForm.area;
+    this.movieForm.tagVal = this.preForm.tagId;
+    this.movieForm.movieLength = this.preForm.movieLength;
+    this.movieForm.releaseTime = this.preForm.releaseTime;
+    this.movieForm.movieUrl = this.preForm.movieUrl;
+    this.imageUrl = this.preForm.imgUrl;
+    this.movieType = "video/" + this.movieForm.movieUrl.split(".").slice(-1)[0];
   },
-  beforeDestroyed() {
-    this.preForm = Object;
-    this.movieForm = new FormData();
+  mounted() {
+    this.$refs.videoEdit.src = this.preForm.movieUrl;
   },
   methods: {
     httpRequest(param) {
